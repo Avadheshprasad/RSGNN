@@ -112,7 +112,7 @@ def feature_flip(number_flip, x):
     if number_flip > 0:
         for i in range(x1.shape[0]):
             flip_indices = np.random.choice(x1.shape[1], size=int(number_flip), replace=False)
-            idex_fea = x1[i, flip_indices]
+            idex_fea = x1[i, flip_indices].toarray()
             x1[i,flip_indices] = np.where(idex_fea == 0, 1, 0)
     np.random.seed(args.seed)
     return x1
