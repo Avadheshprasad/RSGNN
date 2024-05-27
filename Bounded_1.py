@@ -224,6 +224,10 @@ class RSGNN:
             return grad_f 
 
     def train_x(self,epoch, features, adj, labels, idx_train, idx_val):
+        difference_mask = self.features != self.noise_features
+        count_differing_elements = difference_mask.sum().item()
+        print("count_differing_elements", count_differing_elements)
+        
         args = self.args
         # estimator = self.estimator
         adj = self.normalize()
@@ -271,9 +275,7 @@ class RSGNN:
         # Step 3: Apply threshold to set values >= 0.5 to 1 and the rest to 0
         self.features = (normalized_tensor >= 0.5).float()
         # self.features = torch.clamp(self.features,min=0)
-        difference_mask = self.features != self.noise_features
-        count_differing_elements = difference_mask.sum().item()
-        print("count_differing_elements", count_differing_elements)
+        
 
 
         self.model.eval()
