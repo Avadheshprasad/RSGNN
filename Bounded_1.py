@@ -274,6 +274,7 @@ class RSGNN:
         
         # Step 3: Apply threshold to set values >= 0.5 to 1 and the rest to 0
         self.features = (normalized_tensor >= 0.5).float()
+        print(self.features)
         # self.features = torch.clamp(self.features,min=0)
         
 
