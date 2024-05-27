@@ -224,6 +224,7 @@ class RSGNN:
             return grad_f 
 
     def train_x(self,epoch, features, adj, labels, idx_train, idx_val):
+        print("sum",torch.sum(self.features))
         difference_mask = self.features != self.noise_features
         count_differing_elements = difference_mask.sum().item()
         print("count_differing_elements", count_differing_elements)
