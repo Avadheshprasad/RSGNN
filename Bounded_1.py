@@ -271,6 +271,10 @@ class RSGNN:
         # Step 3: Apply threshold to set values >= 0.5 to 1 and the rest to 0
         self.features = (normalized_tensor >= 0.5).float()
         # self.features = torch.clamp(self.features,min=0)
+        difference_mask = self_features != self_noise_features
+        count_differing_elements = difference_mask.sum().item()
+        print("count_differing_elements", count_differing_elements)
+
 
         self.model.eval()
         output = self.model(self.features, adj)
