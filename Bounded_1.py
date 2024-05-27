@@ -260,7 +260,7 @@ class RSGNN:
         self.features -= -1*1e-3*total_grad
         
         tensor_min = self.features.min()
-        print(tensor_min)
+        print("avd",tensor_min)
         normalized_tensor = self.features - tensor_min
         # Step 2: Divide by the range (max - min)
         tensor_max = self.features.max()
