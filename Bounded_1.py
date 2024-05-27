@@ -94,9 +94,9 @@ class RSGNN:
         # noise = torch.randn(shape_a) * std
 
         # # Add the noise to the original tensor
-        # self.features = noise_features/2
+        self.features = noise_features
         
-        self.features = torch.zeros_like(noise_features)
+        # self.features = torch.zeros_like(noise_features)
         # print(self.features)
         # print(self.noise_features)
         self.features_old= torch.zeros_like(noise_features)
@@ -258,6 +258,18 @@ class RSGNN:
         self.features_old = self.features
         # print(total_grad)
         self.features -= -1*1e-3*total_grad
+        
+        tensor_min = self.features.min()
+        print(tensor_min)
+        normalized_tensor = self.features - tensor_min
+        # Step 2: Divide by the range (max - min)
+        tensor_max = self.features.max()
+        print(tensor_max)
+        range_tensor = tensor_max - tensor_min
+        normalized_tensor = normalized_tensor / range_tensor
+        
+        # Step 3: Apply threshold to set values >= 0.5 to 1 and the rest to 0
+        self.features = (normalized_tensor >= 0.5).float()
         # self.features = torch.clamp(self.features,min=0)
 
         self.model.eval()
